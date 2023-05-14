@@ -32,19 +32,26 @@ export class App extends Component {
   }
 
   addContact = ({ name, number }) => {
-    const isInContscts = this.state.contacts.some(
-      contact => contact.name.toLocaleUpperCase() === name.toLocaleUpperCase
-    );
-    if (isInContscts) {
-      alert(name + ' is already in contacts');
-      return;
-    }
-    this.setState(prevState => {
-      return {
-        contacts: [{ name, number, id: nanoid() }, ...prevState.contacts],
-      };
-    });
+  const isInContacts = this.state.contacts.some(
+    contact => contact.name.toLocaleUpperCase() === name.toLocaleUpperCase()
+  );
+
+  if (isInContacts) {
+    alert(name + ' is already in contacts');
+    return;
+  }
+
+  const contact = {
+    name,
+    number,
+    id: nanoid()
   };
+    
+  const updatedContacts = [contact, ...this.state.contacts];
+  this.setState({
+    contacts: updatedContacts
+  });
+};
 
   deleteContact = id => {
     this.setState(prevState => ({
